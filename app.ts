@@ -4,12 +4,12 @@ import express, {
   Response,
   NextFunction,
   ErrorRequestHandler,
-} from 'express'
-import cors, { CorsOptions } from 'cors'
-const cookieParser = require('cookie-parser')
+} from 'express';
+import cors, { CorsOptions } from 'cors';
+const cookieParser = require('cookie-parser');
 
-const app: Express = express()
-const Confg = require('./config')
+const app: Express = express();
+const Confg = require('./config');
 
 const allowOrigins: { [index: string]: boolean } = {
   'https://localhost:3000': true,
@@ -28,35 +28,35 @@ const allowOrigins: { [index: string]: boolean } = {
   'http://hynnchain.com': true,
   'https://127.0.0.1:3000': true,
   'http://127.0.0.1:3000': true,
-}
+};
 
-app.use(cookieParser())
+app.use(cookieParser());
 
 const corsOptions: CorsOptions = {
   origin: function (
     origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
+    callback: (err: Error | null, allow?: boolean) => void,
   ) {
     if (!origin || allowOrigins[origin]) {
-      callback(null, true)
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
-}
-app.use(cors(corsOptions))
+};
+app.use(cors(corsOptions));
 
 const MiddleError: ErrorRequestHandler = (
   e,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  const statusCode: number = e.statusCode || 500
-  console.log(e.message, 'This error occured MiddleError from app.ts')
-  res.status(statusCode).send({ message: e.message })
-}
-app.use(MiddleError)
+  const statusCode: number = e.statusCode || 500;
+  console.log(e.message, 'This error occured MiddleError from app.ts');
+  res.status(statusCode).send({ message: e.message });
+};
+app.use(MiddleError);
 
-export default app
+export default app;

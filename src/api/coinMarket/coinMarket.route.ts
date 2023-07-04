@@ -1,10 +1,10 @@
-import express from 'express'
+import express from 'express';
 import {
   getCoinPriceController,
   getCoinCurrencyController,
-} from './coinMarket.controller'
+} from './coinMarket.controller';
 
-export const router = express.Router()
+export const router = express.Router();
 
-router.get('/coinPrice', getCoinPriceController)
-router.get('/currency', getCoinCurrencyController)
+router.get('/coinPrice', getCoinPriceController);
+router.get('/currency', getCoinCurrencyController);
