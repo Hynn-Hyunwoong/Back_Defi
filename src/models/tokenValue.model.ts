@@ -3,11 +3,11 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 export class TokenValue extends Model {
   public name!: string;
   public date!: Date;
-  public dailyOpenPriceUSD!: number;
-  public dailyEndPriceUSD!: number;
-  public dailyOpenPriceKRW!: number;
-  public dailyEndPriceKRW!: number;
-  public lastUppdateDate!: Date;
+  public dailyOpenPriceUSD?: number;
+  public dailyEndPriceUSD?: number;
+  public dailyOpenPriceKRW?: number;
+  public dailyEndPriceKRW?: number;
+  public lastUppdateDate?: string;
 }
 
 export const initializeTokenValue = (sequelize: Sequelize) => {

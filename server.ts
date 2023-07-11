@@ -9,6 +9,7 @@ import { ETHtokenData, ARBtokenData, USDTtokenData } from './src/bulkdata';
 import { ITokenData } from './src/bulkdata/tokens/interface.tokendata';
 import { PriceUpdate } from './src/api/coinMarket/coinMarket.schedule';
 import { ASDtokenData } from './src/bulkdata/tokens/ASD.tokendata';
+import { Model, ModelCtor } from 'sequelize';
 
 app.use('/', router);
 
@@ -20,7 +21,7 @@ const httpport = setting.server.httpport || 'error';
 const httpsport = setting.server.httpsport || 'error';
 const useHttps = process.env.USE_HTTPS === 'true';
 
-function isITokenData(object: any): object is ITokenData {
+const isITokenData = (object: any): object is ITokenData => {
   return (
     'name' in object &&
     'date' in object &&
@@ -28,25 +29,28 @@ function isITokenData(object: any): object is ITokenData {
     'dailyEndPriceUSD' in object &&
     'dailyOpenPriceKRW' in object &&
     'dailyEndPriceKRW' in object &&
-    object.name &&
-    object.date &&
-    object.dailyOpenPriceUSD !== undefined &&
-    object.dailyEndPriceUSD !== undefined &&
-    object.dailyOpenPriceKRW !== undefined &&
-    object.dailyEndPriceKRW !== undefined
+    'lastUppdateDate' in object
   );
-}
+};
 
 const initialSyncDB = async () => {
-  await sequelize.sync({ force: true });
-  const TokenValue = sequelize.models.TokenValue;
-  const bulkdata: ITokenData[] = [
+  await sequelize.sync({ force: false });
+  const TokenValue = sequelize.models.TokenValue as ModelCtor<Model<any, any>>;
+  const bulkdata: readonly ITokenData[] = [
     ...ARBtokenData,
     ...ETHtokenData,
     ...USDTtokenData,
     ...ASDtokenData,
   ].filter(isITokenData);
-  await TokenValue.bulkCreate(bulkdata as any);
+  await TokenValue.bulkCreate(bulkdata as any[], {
+    updateOnDuplicate: [
+      'dailyOpenPriceUSD',
+      'dailyEndPriceUSD',
+      'dailyOpenPriceKRW',
+      'dailyEndPriceKRW',
+      'lastUppdateDate',
+    ],
+  });
 };
 
 if (useHttps) {

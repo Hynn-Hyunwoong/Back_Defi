@@ -10,9 +10,9 @@ import {
 export const USDTtokenData: ITokenData[] = dataLength.map((date, index) => ({
   name: 'USDT',
   date: date.toString().slice(0, 10),
-  dailyOpenPriceKRW: USDTkrwopenPrice[index],
-  dailyEndPriceKRW: USDTkrwclosePrice[index],
-  dailyOpenPriceUSD: USDTusdopenPrice[index],
-  dailyEndPriceUSD: USDTusdclosePrice[index],
+  dailyOpenPriceKRW: USDTkrwopenPrice[index] || 0,
+  dailyEndPriceKRW: USDTkrwclosePrice[index] || 0,
+  dailyOpenPriceUSD: USDTusdopenPrice[index] || 0,
+  dailyEndPriceUSD: USDTusdclosePrice[index] || 0,
   lastUppdateDate: new Date().toISOString().slice(0, 10),
 }));
