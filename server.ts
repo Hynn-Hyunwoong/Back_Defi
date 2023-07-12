@@ -10,8 +10,11 @@ import { ITokenData } from './src/bulkdata/tokens/interface.tokendata';
 import { PriceUpdate } from './src/api/coinMarket/coinMarket.schedule';
 import { ASDtokenData } from './src/bulkdata/tokens/ASD.tokendata';
 import { Model, ModelCtor } from 'sequelize';
+import express from 'express';
+import path from 'path';
 
 app.use('/', router);
+app.use(express.static(path.join(__dirname, 'public')));
 
 const env: 'development' | 'production' = (process.env.NODE_ENV ||
   'development') as 'development' | 'production';

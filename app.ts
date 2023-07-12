@@ -6,10 +6,10 @@ import express, {
   ErrorRequestHandler,
 } from 'express';
 import cors, { CorsOptions } from 'cors';
+import path from 'path';
 const cookieParser = require('cookie-parser');
 
 const app: Express = express();
-const Confg = require('./config');
 
 const allowOrigins: { [index: string]: boolean } = {
   'https://localhost:3000': true,
@@ -31,6 +31,7 @@ const allowOrigins: { [index: string]: boolean } = {
 };
 
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const corsOptions: CorsOptions = {
   origin: function (
