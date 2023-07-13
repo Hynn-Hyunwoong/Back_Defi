@@ -14,7 +14,7 @@ import express from 'express';
 import path from 'path';
 
 app.use('/', router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.resolve(__dirname, 'public')));
 
 const env: 'development' | 'production' = (process.env.NODE_ENV ||
   'development') as 'development' | 'production';
