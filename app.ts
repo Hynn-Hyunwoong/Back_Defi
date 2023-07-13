@@ -24,7 +24,7 @@ const allowOrigins: { [index: string]: boolean } = {
   'http://hynn.kr': true,
   'https://www.hynnchain.com': true,
   'http://www.hynnchain.com': true,
-  'https://hynnchain.com:': true,
+  'https://hynnchain.com': true,
   'http://hynnchain.com': true,
   'https://127.0.0.1:3000': true,
   'http://127.0.0.1:3000': true,
