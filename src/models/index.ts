@@ -1,6 +1,6 @@
 import { Sequelize, Dialect, Model, ModelCtor } from 'sequelize';
 import { initializeTokenValue } from './tokenValue.model';
-import { initializeContractAddress } from './contractAddress.model';
+import { initializeContractAddress } from './proposalList.model';
 import { config } from '../../config';
 
 const env = (process.env.NODE_ENV || 'development') as
