@@ -1,6 +1,7 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 export class ProposalList extends Model {
+  public Index!: number;
   public transaction!: string;
   public title!: string;
   public body!: string;
@@ -9,6 +10,11 @@ export class ProposalList extends Model {
 export const initializeContractAddress = (sequelize: Sequelize) => {
   ProposalList.init(
     {
+      Index: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+      },
       transaction: {
         type: DataTypes.STRING,
         allowNull: false,
