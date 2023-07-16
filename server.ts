@@ -6,12 +6,14 @@ import app from './app';
 import router from './src/routes/index';
 import { sequelize } from './src/models';
 import { ETHtokenData, ARBtokenData, USDTtokenData } from './src/bulkdata';
+import { DashboardData } from './src/api/Dashboard/dashboard.bulkdata';
 import { ITokenData } from './src/bulkdata/tokens/interface.tokendata';
 import { PriceUpdate } from './src/api/coinMarket/coinMarket.schedule';
 import { ASDtokenData } from './src/bulkdata/tokens/ASD.tokendata';
 import { Model, ModelCtor } from 'sequelize';
 import express from 'express';
 import path from 'path';
+import { Dashboard } from './src/models/dashboard.model';
 
 app.use('/', router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -38,6 +40,9 @@ const isITokenData = (object: any): object is ITokenData => {
 
 const initialSyncDB = async () => {
   await sequelize.sync({ force: false });
+  await Dashboard.bulkCreate(DashboardData, {
+    updateOnDuplicate: ['TotalDeposit', 'TotalSupply', 'TotalRewardLp'],
+  });
   const TokenValue = sequelize.models.TokenValue as ModelCtor<Model<any, any>>;
   const bulkdata: readonly ITokenData[] = [
     ...ARBtokenData,
