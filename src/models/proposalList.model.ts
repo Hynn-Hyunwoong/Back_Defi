@@ -14,6 +14,7 @@ export const initializeContractAddress = (sequelize: Sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true
       },
       transaction: {
         type: DataTypes.STRING,
