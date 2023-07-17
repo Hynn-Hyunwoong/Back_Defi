@@ -47,13 +47,20 @@ export class DashboardRepository {
     TotalRewardLp: number,
   ): Promise<Dashboard | null> {
     try {
-      return await Dashboard.create({
-        Token: token,
-        Date: today,
-        TotalDeposit: TotalDeposit,
-        TotalSupply: TotalSupply,
-        TotalRewardLp: TotalRewardLp,
-      });
+      const [dashboard, created] = await Dashboard.upsert(
+        {
+          Token: token,
+          Date: today,
+          TotalDeposit: TotalDeposit,
+          TotalSupply: TotalSupply,
+          TotalRewardLp: TotalRewardLp,
+        },
+        {
+          returning: true,
+        },
+      );
+
+      return dashboard;
     } catch (e) {
       console.error(e);
       return null;
